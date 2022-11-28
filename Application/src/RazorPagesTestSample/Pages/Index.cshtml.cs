@@ -9,7 +9,7 @@ namespace RazorPagesTestSample.Pages
 {
     public class IndexModel : PageModel
     {
-        private bobby AppDbContext _db;
+        private readonly AppDbContext _db;
 
         public IndexModel(AppDbContext db)
         {
