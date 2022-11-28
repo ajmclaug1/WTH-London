@@ -19,7 +19,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: './Application'
+        working-directory: './Application/src/RazorPagesTestSample'
 
     runs-on: ubuntu-latest
 
