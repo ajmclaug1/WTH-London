@@ -1,13 +1,13 @@
 name: deploy
 
-env:
-  targetEnv : 'azappdevops-prod'
+
 
 on:
   workflow_dispatch
   
 jobs:
-  deploy:
+  deployToTest:
+    environment: "Test"
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout
@@ -26,6 +26,29 @@ jobs:
           template: "ARM-Templates/container-webapp-template.json"
           # Specifies the name of the resource group deployment to create.
           deploymentName:  MyGithubDeployment
-          parameters: webAppName=${{ env.targetEnv }} imageName="wth/dotnetcoreapp:latest"
+          parameters: webAppName=${{ env.app_name }} imageName="wth/dotnetcoreapp:latest"
+
+  deployToProd:
+    environment: "Prod"
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v2.5.0
+        
+      - uses: Azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.CLIENTID }}","clientSecret":"${{ secrets.AZURE_SERVICE_PRINCIPLE_VALUE }}","subscriptionId":"${{ secrets.SUBSCRIPTIONID }}","tenantId":"${{ secrets.TENANTID }}"}'
+      - name: Deploy Azure Resource Manager (ARM) Template
+        uses: Azure/arm-deploy@v1.0.9
+        with:
+          # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
+          scope: 'resourcegroup'
+          resourceGroupName: 'rg-github-01'
+          # Specify the path or URL to the Azure Resource Manager template.
+          template: "ARM-Templates/container-webapp-template.json"
+          # Specifies the name of the resource group deployment to create.
+          deploymentName:  MyGithubDeployment
+          parameters: webAppName=${{ env.app_name }} imageName="wth/dotnetcoreapp:latest"
 
             
+
