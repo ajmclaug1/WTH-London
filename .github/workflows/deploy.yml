@@ -1,0 +1,35 @@
+name: deploy
+
+on:
+  workflow_dispatch
+  
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v2.5.0
+      - name: Azure Login
+        uses: Azure/login@v1.4.6
+        with:
+          # ClientId of the Azure Service principal created.
+          client-id: ${{ secrets.CLIENTID }}
+          # TenantId of the Azure Service principal created.
+          tenant-id:  ${{ secrets.TENANTID }}
+          # Azure subscriptionId
+          subscription-id: ${{ secrets.SUBSCRIPTIONID }}
+          # Set this value to true to enable Azure PowerShell Login in addition to Az CLI login
+          enable-AzPSSession: true
+      - name: Deploy Azure Resource Manager (ARM) Template
+        uses: Azure/arm-deploy@v1.0.9
+        with:
+          # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
+          scope: 'resourcegroup'
+          # Provide the target region, only required for management Group or Subscription deployments.
+          region: resourcegroup().location
+          # Specify the path or URL to the Azure Resource Manager template.
+          template: "ARM-Templates/container-webapp-template.json"
+          # Specifies the name of the resource group deployment to create.
+          deploymentName:  MyGithubDeployment
+
+            
