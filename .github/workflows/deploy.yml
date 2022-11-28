@@ -1,7 +1,7 @@
 name: deploy
 
 env:
-  targetEnv : 'azappdevops-test'
+  targetEnv : 'azappdevops-prod'
 
 on:
   workflow_dispatch
