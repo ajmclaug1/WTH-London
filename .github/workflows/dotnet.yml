@@ -46,14 +46,18 @@ jobs:
 
   docker:
     name: dockerbuild
-    runs-on: ubuntu-latest
     
+    runs-on: ubuntu-latest
+        defaults:
+      run:
+        shell: bash
+        working-directory: './Application/src/RazorPagesTestSample'
     steps:
       - uses: actions/checkout@v2
         name: Docker_Login
       - run:  docker login $registryName -u ${{secrets.ACR_USERNAME}} -p ${{secrets.ACR_PASSWORD}}
         name: Docker_build
-      - run: docker build -t $registryName/$repositoryName:$tag --build-arg build_version=$tag .
+      - run: docker build -t $registryName/$repositoryName:$tag --build-arg build_version=$tag -f .\Dockerfile
         name: Docker_push
       - run: docker push $registryName/$repositoryName:$tag
       
