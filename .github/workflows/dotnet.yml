@@ -44,7 +44,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
   
-  login:
+  Docker:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -53,8 +53,8 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: $registryName.azurecr.io
-          username: ${{ secrets.AZURE_CLIENT_ID }}
-          password: ${{ secrets.AZURE_CLIENT_SECRET }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD}}
       -
         name: Build and push
         uses: docker/build-push-action@v3

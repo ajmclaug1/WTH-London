@@ -8,4 +8,3 @@ If you aren't using an IDE with built-in test features, execute the following co
 dotnet test
 ```
 
-test
