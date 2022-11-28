@@ -18,8 +18,6 @@ jobs:
         with:
           # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
           scope: 'resourcegroup'
-          # Provide the target region, only required for management Group or Subscription deployments.
-          region: resourcegroup().location
           # Specify the path or URL to the Azure Resource Manager template.
           template: "ARM-Templates/container-webapp-template.json"
           # Specifies the name of the resource group deployment to create.
