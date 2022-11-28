@@ -9,7 +9,7 @@ on:
     branches: [ "main" ]
     paths: 
       - Application/**
-      - '.github\workflows\dotnet.yml'
+      - .github\workflows\dotnet.yml
   pull_request:
     branches: [ "main" ]
     paths:
