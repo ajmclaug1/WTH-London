@@ -1,6 +1,7 @@
 name: deploy
 
 env:
+  targetEnv : 'azappdevops-test'
 
 on:
   workflow_dispatch
@@ -25,5 +26,7 @@ jobs:
           template: "ARM-Templates/container-webapp-template.json"
           # Specifies the name of the resource group deployment to create.
           deploymentName:  MyGithubDeployment
+          parameters: 
+            '{webAppName: env.targetEnv }'
 
             
