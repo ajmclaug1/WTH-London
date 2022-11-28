@@ -23,13 +23,13 @@ env:
 jobs:
   build: 
     name: build_dotNet
-  
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
         working-directory: './Application/src/RazorPagesTestSample'
 
-    runs-on: ubuntu-latest
+    
 
     steps:
     - uses: actions/checkout@v3
@@ -46,9 +46,9 @@ jobs:
 
   docker:
     name: dockerbuild
-    
+
     runs-on: ubuntu-latest
-        defaults:
+    defaults:
       run:
         shell: bash
         working-directory: './Application/src/RazorPagesTestSample'
