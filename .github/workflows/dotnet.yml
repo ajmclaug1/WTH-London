@@ -8,7 +8,7 @@ on:
     branches: [ "main" ]
     paths: 
       - Application/**
-      - .github\workflows\deploy.yml
+      - .github/workflows/deploy.yml
   pull_request:
     branches: [ "main" ]
     paths:
@@ -52,7 +52,7 @@ jobs:
         name: Login to ACR
         uses: docker/login-action@v2
         with:
-          registry: $registryName.azurecr.io
+          registry: ${{env.registryName}}.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD}}
       -
@@ -60,6 +60,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: $registryName/$repositoryName:$tag
+          tags: ${{env.registryName}}.azurecr.io/${{env.repositoryName}}:${{env.tag}}
     
   
