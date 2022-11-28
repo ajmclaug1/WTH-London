@@ -1,13 +1,19 @@
 name: deploy
 
-env:
-  targetEnv : 'azappdevops-prod'
+
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      environment_name:
+        default: Test
+        type: environment
+        description: Environment
   
 jobs:
   deploy:
+    environment: 
+      name: ${{inputs.environment_name}}
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout
@@ -26,6 +32,6 @@ jobs:
           template: "ARM-Templates/container-webapp-template.json"
           # Specifies the name of the resource group deployment to create.
           deploymentName:  MyGithubDeployment
-          parameters: webAppName=${{ env.targetEnv }} imageName="wth/dotnetcoreapp:latest"
+          parameters: webAppName="azappdevops-${{inputs.environment_name}}" imageName="wth/dotnetcoreapp:latest"
 
-            
+  
