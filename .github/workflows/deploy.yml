@@ -9,17 +9,10 @@ jobs:
     steps: 
       - name: Checkout
         uses: actions/checkout@v2.5.0
-      - name: Azure Login
-        uses: Azure/login@v1.4.6
+        
+      - uses: Azure/login@v1
         with:
-          # ClientId of the Azure Service principal created.
-          client-id: ${{ secrets.CLIENTID }}
-          # TenantId of the Azure Service principal created.
-          tenant-id:  ${{ secrets.TENANTID }}
-          # Azure subscriptionId
-          subscription-id: ${{ secrets.SUBSCRIPTIONID }}
-          # Set this value to true to enable Azure PowerShell Login in addition to Az CLI login
-          enable-AzPSSession: true
+          creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_SERVICE_PRINCIPLE_VALUE }}","subscriptionId":"${{ secrets.SUBSCRIPTIONID }}","tenantId":"${{ secrets.TENANTID }}"}'
       - name: Deploy Azure Resource Manager (ARM) Template
         uses: Azure/arm-deploy@v1.0.9
         with:
