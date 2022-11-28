@@ -32,6 +32,6 @@ jobs:
           template: "ARM-Templates/container-webapp-template.json"
           # Specifies the name of the resource group deployment to create.
           deploymentName:  MyGithubDeployment
-          parameters: webAppName=${{ env.app_name }} imageName="wth/dotnetcoreapp:latest"
+          parameters: webAppName="azappdevops-${{inputs.environment_name}}" imageName="wth/dotnetcoreapp:latest"
 
   
