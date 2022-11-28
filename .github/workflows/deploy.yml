@@ -27,6 +27,6 @@ jobs:
           # Specifies the name of the resource group deployment to create.
           deploymentName:  MyGithubDeployment
           parameters: 
-            '{webAppName: env.targetEnv }'
+            '{"webAppName": env.targetEnv }'
 
             
