@@ -12,7 +12,7 @@ jobs:
         
       - uses: Azure/login@v1
         with:
-          creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_SERVICE_PRINCIPLE_VALUE }}","subscriptionId":"${{ secrets.SUBSCRIPTIONID }}","tenantId":"${{ secrets.TENANTID }}"}'
+          creds: '{"clientId":"${{ secrets.CLIENTID }}","clientSecret":"${{ secrets.AZURE_SERVICE_PRINCIPLE_VALUE }}","subscriptionId":"${{ secrets.SUBSCRIPTIONID }}","tenantId":"${{ secrets.TENANTID }}"}'
       - name: Deploy Azure Resource Manager (ARM) Template
         uses: Azure/arm-deploy@v1.0.9
         with:
