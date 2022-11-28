@@ -1,0 +1,27 @@
+name: deploy
+
+on:
+  workflow_dispatch
+  
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v2.5.0
+        
+      - uses: Azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.CLIENTID }}","clientSecret":"${{ secrets.AZURE_SERVICE_PRINCIPLE_VALUE }}","subscriptionId":"${{ secrets.SUBSCRIPTIONID }}","tenantId":"${{ secrets.TENANTID }}"}'
+      - name: Deploy Azure Resource Manager (ARM) Template
+        uses: Azure/arm-deploy@v1.0.9
+        with:
+          # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
+          scope: 'resourcegroup'
+          resourceGroupName: 'githubpractice'
+          # Specify the path or URL to the Azure Resource Manager template.
+          template: "ARM-Templates/container-webapp-template.json"
+          # Specifies the name of the resource group deployment to create.
+          deploymentName:  MyGithubDeployment
+
+            
