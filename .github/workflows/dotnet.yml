@@ -13,8 +13,15 @@ on:
     paths:
       - Application/**
 
+env:
+  registryName: azappdevopsreg
+  repositoryName: wth/dotnetcoreapp
+  dockerFolderPath: Application/src/RazorPagesTestSample
+  tag: ${{github.run_number}}
+
 jobs:
-  build:
+  build: 
+    name: build_dotNet
   
     defaults:
       run:
@@ -28,10 +35,26 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 2.2
+        dotnet-version: 3.1
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore 
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+  docker:
+    name: dockerbuild
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+        name: Docker_Login
+      - run:  docker login $registryName -u ${{secrets.ACR_USERNAME}} -p ${{secrets.ACR_PASSWORD}}
+        name: Docker_build
+      - run: docker build -t $registryName/$repositoryName:$tag --build-arg build_version=$tag .
+        name: Docker_push
+      - run: docker push $registryName/$repositoryName:$tag
+      
+    
+  
